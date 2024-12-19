@@ -45,18 +45,33 @@ class _ChatroomState extends State<Chatroom> {
           ),
         ),
         if (isLoding) const LinearProgressIndicator(),
-        TextField(
-          controller: textController,
-          focusNode: _focusNode,
-          onSubmitted: (value) {
-            if (!isLoding) {
-              _sendMessage(value);
-            }
-          },
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Type a message',
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: textController,
+                focusNode: _focusNode,
+                onSubmitted: (value) {
+                  if (!isLoding) {
+                    _sendMessage(value);
+                  }
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Type a message',
+                ),
+              ),
+            ),
+            IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: isLoding
+                    ? null
+                    : () {
+                        if (!isLoding) {
+                          _sendMessage(textController.text);
+                        }
+                      }),
+          ],
         ),
       ],
     );
@@ -73,6 +88,10 @@ class _ChatroomState extends State<Chatroom> {
   }
 
   Future _sendMessage(String value) async {
+    if (value.isEmpty) {
+      return;
+    }
+
     setState(() {
       isLoding = true;
       chatbotHistory.add(value);

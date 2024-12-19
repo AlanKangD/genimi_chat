@@ -14,11 +14,15 @@ class MessageWidget extends StatelessWidget {
           isUserMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-          decoration: BoxDecoration(
-            color: isUserMessage ? Colors.blue : Colors.grey,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(message)),
+            decoration: BoxDecoration(
+              color: isUserMessage
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : Theme.of(context).colorScheme.surfaceVariant,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Text(message)),
       ],
     );
   }
