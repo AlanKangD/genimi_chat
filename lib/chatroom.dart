@@ -1,5 +1,6 @@
 import 'package:chat_project/message_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 class Chatroom extends StatefulWidget {
   const Chatroom({super.key});
@@ -25,6 +26,22 @@ class _ChatroomState extends State<Chatroom> {
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   bool isLoding = false;
+
+  late final GenerativeModel _model;
+  late final ChatSession _chateSession;
+
+  // 중요한 데이터 숨기기
+  static const String _apiKey = String.fromEnvironment("API_KEY");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(_apiKey);
+
+    // _model = GenerativeModel(model: "gemini-pro", apiKey: _apiKey); // api key 값 세팅 및 , gemini 모델 선택
+    // _chateSession = _model.startChat();
+  }
 
   @override
   Widget build(BuildContext context) {
