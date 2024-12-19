@@ -39,8 +39,8 @@ class _ChatroomState extends State<Chatroom> {
     super.initState();
     print(_apiKey);
 
-    // _model = GenerativeModel(model: "gemini-pro", apiKey: _apiKey); // api key 값 세팅 및 , gemini 모델 선택
-    // _chateSession = _model.startChat();
+     _model = GenerativeModel(model: "gemini-1.5-flash-latest", apiKey: _apiKey); // api key 값 세팅 및 , gemini 모델 선택
+    _chateSession = _model.startChat();
   }
 
   @override
@@ -62,11 +62,11 @@ class _ChatroomState extends State<Chatroom> {
               return ListTile(
                 title: MessageWidget(
                   message: text,
-                  isUserMessage: index % 2 == 1,
+                  isUserMessage: content.role == 'user',
                 ),
               );
             }),
-            itemCount: chatbotHistory.length,
+            itemCount: _chateSession.history.length,
             controller: _scrollController,
           ),
         ),

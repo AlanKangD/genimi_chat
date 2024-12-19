@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MessageWidget extends StatelessWidget {
   const MessageWidget(
@@ -22,7 +23,10 @@ class MessageWidget extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Text(message)),
+            child: MarkdownBody(
+              data: message,
+              selectable: true,
+            )),
       ],
     );
   }
