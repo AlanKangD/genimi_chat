@@ -50,9 +50,18 @@ class _ChatroomState extends State<Chatroom> {
         Expanded(
           child: ListView.builder(
             itemBuilder: ((context, index) {
+              // 해당 정보는 gemini 의 값을 받아오는데 데이터 형식이 많기 때문에 일단 text 만 가지고와서 채워주기
+              final content = _chateSession.history.toList()[index];
+              final text = content.parts
+                  .whereType<TextPart>()
+                  .map(
+                    (e) => e.text,
+                  )
+                  .join();
+
               return ListTile(
                 title: MessageWidget(
-                  message: chatbotHistory[index],
+                  message: text,
                   isUserMessage: index % 2 == 1,
                 ),
               );
@@ -116,13 +125,14 @@ class _ChatroomState extends State<Chatroom> {
     });
     _scrollToBottom();
 
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        isLoding = false;
-        chatbotHistory.add('I am chatbot');
-      });
-      _scrollToBottom();
-      _focusNode.requestFocus();
+    // 직접적으로 gemini에 값 던지기
+    final response = await _chateSession.sendMessage(Content.text(value));
+
+    setState(() {
+      isLoding = false;
     });
+
+    _scrollToBottom();
+    _focusNode.requestFocus();
   }
 }
