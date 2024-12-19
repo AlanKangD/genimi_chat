@@ -15,18 +15,21 @@ class MessageWidget extends StatelessWidget {
           isUserMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-            decoration: BoxDecoration(
-              color: isUserMessage
-                  ? Theme.of(context).colorScheme.primaryContainer
-                  : Theme.of(context).colorScheme.surfaceVariant,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: MarkdownBody(
-              data: message,
-              selectable: true,
-            )),
+          // 만약 container 영역이 폭을 넘어 선다면 width 값을 주고 하단의 코드를 넣어주면 된다.
+          width: MediaQuery.of(context).size.width * 0.8,
+          decoration: BoxDecoration(
+            color: isUserMessage
+                ? Theme.of(context).colorScheme.primaryContainer
+                : Theme.of(context).colorScheme.surfaceVariant,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: MarkdownBody(
+            data: message,
+            selectable: true,
+          ),
+        ),
       ],
     );
   }
