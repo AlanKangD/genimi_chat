@@ -10,9 +10,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+          colorSchemeSeed: const Color.fromARGB(255, 0, 255, 255),
+          brightness: Brightness.dark),
       home: Scaffold(
-        appBar: AppBar(title: const Text("Genimi"),),
+        appBar: AppBar(
+          title: const Text("Genimi"),
+        ),
         body: const Center(
           child: Chatroom(),
         ),

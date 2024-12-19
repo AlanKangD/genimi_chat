@@ -13,7 +13,12 @@ class MessageWidget extends StatelessWidget {
       mainAxisAlignment:
           isUserMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        Text(message),
+        Container(
+          decoration: BoxDecoration(
+            color: isUserMessage ? Colors.blue : Colors.grey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(message)),
       ],
     );
   }
