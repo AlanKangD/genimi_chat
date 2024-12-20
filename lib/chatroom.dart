@@ -27,6 +27,9 @@ class _ChatroomState extends State<Chatroom> {
   final ScrollController _scrollController = ScrollController();
   bool isLoding = false;
 
+  // 사용자가 입력한 값을 저장하는 변수
+  String textContent = "";
+
   late final GenerativeModel _model;
   late final ChatSession _chateSession;
 
@@ -39,7 +42,9 @@ class _ChatroomState extends State<Chatroom> {
     super.initState();
     print(_apiKey);
 
-     _model = GenerativeModel(model: "gemini-1.5-flash-latest", apiKey: _apiKey); // api key 값 세팅 및 , gemini 모델 선택
+    _model = GenerativeModel(
+        model: "gemini-1.5-flash-latest",
+        apiKey: _apiKey); // api key 값 세팅 및 , gemini 모델 선택
     _chateSession = _model.startChat();
   }
 
@@ -77,6 +82,12 @@ class _ChatroomState extends State<Chatroom> {
               child: TextField(
                 controller: textController,
                 focusNode: _focusNode,
+                // 한글 처리를 하기 위해서 onChange 를 사용해서 String 에 사용자 값을 저장 시키면서 처리해야한다.
+                onChanged: (value) {
+                  setState(
+                    () => textContent = textController.text,
+                  );
+                },
                 onSubmitted: (value) {
                   if (!isLoding) {
                     _sendMessage(value);
@@ -117,12 +128,12 @@ class _ChatroomState extends State<Chatroom> {
     if (value.isEmpty) {
       return;
     }
-
     setState(() {
       isLoding = true;
       chatbotHistory.add(value);
       textController.clear();
     });
+
     _scrollToBottom();
 
     // 직접적으로 gemini에 값 던지기
